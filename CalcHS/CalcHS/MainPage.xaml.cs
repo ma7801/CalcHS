@@ -107,7 +107,7 @@ namespace CalcHS
             //Expression exp = new Expression(display);
             //String temp = exp.Evaluate().ToString();
             //textDisplay.Text = temp;
-            display = "";
+            //display = "";
 
         }
 
