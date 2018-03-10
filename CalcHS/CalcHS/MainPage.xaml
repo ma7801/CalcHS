@@ -2,10 +2,91 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CalcHS"
-             x:Class="CalcHS.MainPage">
+             x:Class="CalcHS.MainPage"
+             Title="CalcHS"
+             BackgroundColor="DarkGray">
+ 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="smallTextButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#555"/>
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BorderRadius" Value="10"/>
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+            <Style x:Key="largeTextButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#555"/>
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BorderRadius" Value="10"/>
+                <Setter Property="FontSize" Value="25" />
+            </Style>
+            <Style x:Key="invButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Yellow"/>
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BorderRadius" Value="10"/>
+                <Setter Property="FontSize" Value="25" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+    <Grid ColumnSpacing="-5" RowSpacing="-9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label x:Name="textDisplay" Text="{Binding textDisplay}" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" TextColor="White" FontSize="35" Grid.ColumnSpan="5" />
+        <Button x:Name="buttonInv" Text = "Inv" Grid.Row="1" Grid.Column="0" Style="{StaticResource invButton}" Clicked="ActivateInverse"/>
+        <Button x:Name="buttonTable" Text = "Table" Grid.Row="1" Grid.Column="1" Style="{StaticResource smallTextButton}" Clicked="StartTableMode"/>
+        <Button x:Name="buttonStat" Text = "Stat" Grid.Row="1" Grid.Column="2" Style="{StaticResource smallTextButton}" Clicked="StartStatMode"/>
+        <Button x:Name="buttonClear" Text = "Clear" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Style="{StaticResource largeTextButton}" Clicked="ClearDisplay"/>
+        <Button x:Name="buttonSin" Text = "sin" Grid.Row="2" Grid.Column="0" Style="{StaticResource smallTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonCos" Text = "cos" Grid.Row="2" Grid.Column="1" Style="{StaticResource smallTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonTan" Text = "tan" Grid.Row="2" Grid.Column="2" Style="{StaticResource smallTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonLog" Text = "log" Grid.Row="2" Grid.Column="3" Style="{StaticResource smallTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonLn" Text = "ln" Grid.Row="2" Grid.Column="4" Style="{StaticResource smallTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonDegRad" Text = "Deg/Rad" Grid.Row="3" Grid.Column="0" Style="{StaticResource smallTextButton}" Clicked="ToggleDegRad"/>
+        <Button x:Name="buttonSqrt" Text = "&#x221a;" Grid.Row="3" Grid.Column="1" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonExp" Text = "^" Grid.Row="3" Grid.Column="2" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonSquared"  Text = "x^2" Grid.Row="3" Grid.Column="3" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonDel" Text = "Del" Grid.Row="3" Grid.Column="4" Style="{StaticResource largeTextButton}" Clicked="BackSpace"/>
+        <Button x:Name="button7" Text = "7" Grid.Row="4" Grid.Column="0" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="button8" Text = "8" Grid.Row="4" Grid.Column="1" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="button9" Text = "9" Grid.Row="4" Grid.Column="2" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonLeftParen" Text = "(" Grid.Row="4" Grid.Column="3" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="buttonRightParen" Text = ")" Grid.Row="4" Grid.Column="4" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button x:Name="button4" Text = "4" Grid.Row="5" Grid.Column="0" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "5" Grid.Row="5" Grid.Column="1" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "6" Grid.Row="5" Grid.Column="2" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "&#x00d7;" Grid.Row="5" Grid.Column="3" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "&#x00f7;" Grid.Row="5" Grid.Column="4" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "1" Grid.Row="6" Grid.Column="0" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "2" Grid.Row="6" Grid.Column="1" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "3" Grid.Row="6" Grid.Column="2" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "+" Grid.Row="6" Grid.Column="3" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "&#x2212;" Grid.Row="6" Grid.Column="4" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "%" Grid.Row="7" Grid.Column="0" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "0" Grid.Row="7" Grid.Column="1" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "." Grid.Row="7" Grid.Column="2" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "(-)" Grid.Row="7" Grid.Column="3" Style="{StaticResource largeTextButton}" Clicked="AppendToDisplay"/>
+        <Button Text = "Enter (=)" Grid.Row="7" Grid.Column="4" Style="{StaticResource smallTextButton}" Clicked="ParseAndEvalDisplay"/>
+
+
+
+
+    </Grid>
+
 
 </ContentPage>
