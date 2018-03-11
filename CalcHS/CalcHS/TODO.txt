@@ -1,0 +1,10 @@
+﻿
+
+TODO:
+-Disable keyboard popping up when clicking input (intercept event of some sort?)
+
+
+Future Features:
+- Table
+- Stats (1 var, 2 var)
+- Probability functions
