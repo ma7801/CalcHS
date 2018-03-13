@@ -12,7 +12,7 @@ namespace CalcHS
 
     public partial class MainPage : ContentPage
     {
-        Editor display;
+        Label display;
         DisplayState displayState;
         String expressionText;
         String answer;
@@ -28,6 +28,7 @@ namespace CalcHS
             //BindingContext = new Calculator();
 
             answer = "";
+            expressionText = "";
 
             calcButtons = new List<CalcButton>
             {
@@ -66,17 +67,17 @@ namespace CalcHS
                 new CalcButton(ButtonType.Number, 6, 3, "(-)", "-", "-"),
                 new CalcButton(ButtonType.Special, 6, 4, "Enter\n(=)")
             };
-            
 
-            display = new Editor
+
+            display = new Label
             {
-                Text = ""
-
+                Text = "",
+                FontSize = 12
             };
 
             var grid = new Grid();
 
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(4, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
@@ -91,6 +92,7 @@ namespace CalcHS
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
             grid.Children.Add(display, 0, 0);   // Add display to grid
+            Grid.SetColumnSpan(display, 5);
 
             // Add the buttons
             buttons = new List<Button> { };
@@ -185,8 +187,33 @@ namespace CalcHS
 
         private void ParseAndEvalDisplay(object sender, EventArgs e)
         {
-            Expression exp = new Expression(expressionText);
-            answer = exp.Evaluate().ToString();
+            Expression exp;
+
+            if (expressionText == "")    // If empty expression
+            {
+                return;
+            }
+
+            try
+            {
+                exp = new Expression(expressionText);
+            }
+            catch (ArgumentException error)
+            {
+                return;
+            }
+
+            try
+            {
+                answer = exp.Evaluate().ToString();
+            }
+            catch (EvaluationException error)
+            {
+                display.Text += "\nError in expression.\n";
+                expressionText = "";
+                return;
+            }
+
             display.Text += "\n" + answer + "\n";
             expressionText = "";
             //displayState = DisplayState.Answer;

@@ -1,10 +1,15 @@
 ﻿
-
 TODO:
 -Disable keyboard popping up when clicking input (intercept event of some sort?)
+   - Need to have custom renderers for Android and IOS.  See: https://theconfuzedsourcecode.wordpress.com/2017/05/19/a-keyboard-disabled-entry-control-in-xamarin-forms/
 
 
-Future Features:
+Feautres to do next:
+- settings (color theme, mainly)
 - Table
+ 
+
+
+Down the road Features:
 - Stats (1 var, 2 var)
 - Probability functions
