@@ -26,10 +26,23 @@ namespace CalcHS
             //InitializeComponent();  // Gets UI from XAML? -- not using anymore
 
             //BindingContext = new Calculator();
+            String mainBGColor = "";
+            String displayBGColor = "";
+            String displayTextColor = "";
+            String buttonBGColor = "";
+            String buttonTextColor = "";
+
+            // Initialize Colors
+            if (Application.Current.Properties.ContainsKey("MainBGColor")) { mainBGColor = Application.Current.Properties["MainBGColor"] as String; }
+            if (Application.Current.Properties.ContainsKey("DisplayBGColor")) { displayBGColor = Application.Current.Properties["DisplayBGColor"] as String; }
+            if (Application.Current.Properties.ContainsKey("DisplayTextColor")) { displayTextColor = Application.Current.Properties["DisplayTextColor"] as String; }
+            if (Application.Current.Properties.ContainsKey("ButtonBGColor")) { buttonBGColor = Application.Current.Properties["ButtonBGColor"] as String; }
+            if (Application.Current.Properties.ContainsKey("ButtonTextColor")) { buttonTextColor = Application.Current.Properties["ButtonTextColor"] as String; }
 
             answer = "";
             expressionText = "";
 
+            // Initialize button object list
             calcButtons = new List<CalcButton>
             {
                 new CalcButton(ButtonType.Special, 0, 0, "Inv"),
@@ -69,11 +82,27 @@ namespace CalcHS
             };
 
 
+            // Set background color
+            BackgroundColor = Color.FromHex(mainBGColor);
+
+            // Define display
+
+            var displayWrap = new Frame
+            {
+                Padding = new Thickness(10, 10),
+                BackgroundColor = Color.FromHex(displayBGColor)
+            };
+
             display = new Label
             {
                 Text = "",
-                FontSize = 12
+                FontSize = 24,
+                BackgroundColor = Color.FromHex(displayBGColor),
+                TextColor = Color.FromHex(displayTextColor)
             };
+
+            displayWrap.Content = display;
+
 
             var grid = new Grid();
 
@@ -91,8 +120,8 @@ namespace CalcHS
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-            grid.Children.Add(display, 0, 0);   // Add display to grid
-            Grid.SetColumnSpan(display, 5);
+            grid.Children.Add(displayWrap, 0, 0);   // Add display to grid
+            Grid.SetColumnSpan(displayWrap, 5);
 
             // Add the buttons
             buttons = new List<Button> { };
@@ -100,7 +129,9 @@ namespace CalcHS
             for (int i = 0; i < calcButtons.Count; i++) {
                 buttons.Add(new Button
                 {
-                    Text = calcButtons[i].buttonText
+                    Text = calcButtons[i].buttonText,
+                    BackgroundColor = Color.FromHex(buttonBGColor),
+                    TextColor = Color.FromHex(buttonTextColor)
                 });
                 
                 if (calcButtons[i].displayable)
