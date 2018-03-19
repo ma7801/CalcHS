@@ -56,7 +56,7 @@ namespace CalcHS
                 new CalcButton(ButtonType.Function, 1, 4, "ln", "ln(", "Ln("),
                 new CalcButton(ButtonType.Special, 2, 0, "Deg/Rad"),
                 new CalcButton(ButtonType.Function, 2, 1, "\u221a", "\u221a(", "Sqrt("),
-                new CalcButton(ButtonType.Power, 2, 2, "^", "^(", "Pow("),   
+                new CalcButton(ButtonType.Power, 2, 2, "^", "^(", "Pow("),
                 new CalcButton(ButtonType.Power, 2, 3, "x^2", "^(2)", "^(2)"),
                 new CalcButton(ButtonType.Special, 2, 4, "Del"),
                 new CalcButton(ButtonType.Number, 3, 0, "7", "7", "7"),
@@ -85,8 +85,41 @@ namespace CalcHS
             // Set background color
             BackgroundColor = Color.FromHex(mainBGColor);
 
-            // Define display
+            //Define topbar
+            var topBarLeft = new Label
+            {
+                Text = "",
+                BackgroundColor = Color.FromHex(mainBGColor),
+                TextColor = Color.FromHex(buttonTextColor),
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.Center
+            };
+            var topBarCenter = new Label
+            {
+                Text = "CalcHS",
+                BackgroundColor = Color.FromHex(mainBGColor),
+                TextColor = Color.FromHex(buttonTextColor),
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.Center,
+                
+            };
+            
+            var settingsIcon = new Label
+            {
+                Text = "\u2699",
+                BackgroundColor = Color.FromHex(mainBGColor),
+                TextColor = Color.FromHex(buttonTextColor),
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.End
+            };
 
+            // 
+            var settingsTap = new TapGestureRecognizer();
+            settingsTap.Tapped += OpenSettings;
+            settingsIcon.GestureRecognizers.Add(settingsTap);
+
+
+            // Define display
             var displayWrap = new Frame
             {
                 Padding = new Thickness(10, 10),
@@ -98,21 +131,22 @@ namespace CalcHS
                 Text = "",
                 FontSize = 24,
                 BackgroundColor = Color.FromHex(displayBGColor),
-                TextColor = Color.FromHex(displayTextColor)
+                TextColor = Color.FromHex(displayTextColor),
+                
             };
 
             displayWrap.Content = display;
 
-
             var grid = new Grid();
 
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(4, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(8, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
             
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -120,7 +154,14 @@ namespace CalcHS
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-            grid.Children.Add(displayWrap, 0, 0);   // Add display to grid
+            // Add top bar items
+            grid.Children.Add(topBarLeft, 0, 0);
+            grid.Children.Add(topBarCenter, 1, 0);
+            Grid.SetColumnSpan(topBarCenter, 3);
+            grid.Children.Add(settingsIcon, 4, 0);
+
+
+            grid.Children.Add(displayWrap, 0, 1);   // Add display to grid
             Grid.SetColumnSpan(displayWrap, 5);
 
             // Add the buttons
@@ -164,7 +205,7 @@ namespace CalcHS
                 buttonDict.Add(buttons[i].Id, calcButtons[i]);
                 
                 // Add to grid:
-                grid.Children.Add(buttons[i], calcButtons[i].col, calcButtons[i].row+1);
+                grid.Children.Add(buttons[i], calcButtons[i].col, calcButtons[i].row+2);
                 Grid.SetColumnSpan(buttons[i], calcButtons[i].colSpan);
 
             }
@@ -260,6 +301,13 @@ namespace CalcHS
 
         private void ToggleDegRad(object sender, EventArgs e)
         {
+
+        }
+
+        private void OpenSettings(object sender, EventArgs e)
+        {
+            //debug:
+            display.Text = "Clicked settings";
 
         }
     }

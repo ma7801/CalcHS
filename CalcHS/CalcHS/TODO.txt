@@ -1,5 +1,6 @@
 ﻿
 TODO:
+- fix bottom row not displaying (since adding top bar)
 -Disable keyboard popping up when clicking input (intercept event of some sort?)
    - Need to have custom renderers for Android and IOS.  See: https://theconfuzedsourcecode.wordpress.com/2017/05/19/a-keyboard-disabled-entry-control-in-xamarin-forms/
 
