@@ -8,11 +8,14 @@ using Xamarin.Forms;
 
 namespace CalcHS
 {
-    public enum DisplayState { Inputting, Answer };
+    public enum DisplayState { Inputting, Answer, Table, Stats };
 
     public partial class MainPage : ContentPage
     {
-        Label display;
+        //Label display;
+        StackLayout displayWrap;
+        Entry entry;
+        Label resultDisplay;
         DisplayState displayState;
         String expressionText;
         String answer;
@@ -120,12 +123,34 @@ namespace CalcHS
 
 
             // Define display
-            var displayWrap = new Frame
+            displayWrap = new StackLayout
             {
                 Padding = new Thickness(10, 10),
                 BackgroundColor = Color.FromHex(displayBGColor)
             };
 
+            entry = new Entry
+            {
+                Text = "",
+                FontSize = 24,
+                BackgroundColor = Color.FromHex(displayBGColor),
+                TextColor = Color.FromHex(displayTextColor)
+            };
+
+            resultDisplay = new Label
+            {
+                Text = "",
+                FontSize = 24,
+                BackgroundColor = Color.FromHex(displayBGColor),
+                TextColor = Color.FromHex(displayTextColor),
+                HorizontalTextAlignment = TextAlignment.End
+
+            };
+
+
+
+
+            /*
             display = new Label
             {
                 Text = "",
@@ -134,8 +159,11 @@ namespace CalcHS
                 TextColor = Color.FromHex(displayTextColor),
                 
             };
+            */
+            displayWrap.Children.Add(entry);
+            displayWrap.Children.Add(resultDisplay);
+            
 
-            displayWrap.Content = display;
 
             var grid = new Grid();
 
@@ -147,7 +175,8 @@ namespace CalcHS
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
-            
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(2, GridUnitType.Star) });
+
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -195,6 +224,12 @@ namespace CalcHS
                         case ("Deg/Rad"):
                             buttons[i].Clicked += ToggleDegRad;
                             break;
+                        case ("Table"):
+                            buttons[i].Clicked += StartTableMode;
+                            break;
+                        case ("Stat"):
+                            buttons[i].Clicked += StartStatMode;
+                            break;
                         case ("Enter\n(=)"):
                             buttons[i].Clicked += ParseAndEvalDisplay;
                             break;
@@ -227,21 +262,25 @@ namespace CalcHS
 
             if (buttonDict[button.Id].buttonType == ButtonType.Operator && expressionText == "" && answer != "")
             {
-                display.Text += "ans";
+                entry.Text = "ans";
                 expressionText = answer;
             }
-            display.Text += buttonDict[button.Id].displayText;
+            entry.Text += buttonDict[button.Id].displayText;
             expressionText += buttonDict[button.Id].expressionText;
             
         }
 
         public void ActivateInverse(object sender, EventArgs e)
         {
-
+           
         }
 
         private void StartTableMode(object sender, EventArgs e)
         {
+            //debug:
+            displayWrap.Children.Remove(entry);
+            resultDisplay.Text = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA\nALKJDSFKLJD\nALKDJFLKDJF\nLKSDjflskjflsd\nlksjflaksjflk\nlaskdjflkjsadflkj\nalskdfjalskdj\n";
+
 
         }
 
@@ -252,7 +291,8 @@ namespace CalcHS
 
         private void ClearDisplay(object sender, EventArgs e)
         {
-            display.Text = "";
+            entry.Text = "";
+            resultDisplay.Text = "";
             expressionText = "";
         }
 
@@ -281,12 +321,12 @@ namespace CalcHS
             }
             catch (EvaluationException error)
             {
-                display.Text += "\nError in expression.\n";
+                resultDisplay.Text = "Error in expression.";
                 expressionText = "";
                 return;
             }
 
-            display.Text += "\n" + answer + "\n";
+            resultDisplay.Text = "=" + answer;
             expressionText = "";
             //displayState = DisplayState.Answer;
 
@@ -296,7 +336,7 @@ namespace CalcHS
 
         private void BackSpace(object sender, EventArgs e)
         {
-            display.Text = display.Text.Substring(0, display.Text.Length - 1);
+            entry.Text = entry.Text.Substring(0, entry.Text.Length - 1);
         }
 
         private void ToggleDegRad(object sender, EventArgs e)
@@ -307,7 +347,7 @@ namespace CalcHS
         private void OpenSettings(object sender, EventArgs e)
         {
             //debug:
-            display.Text = "Clicked settings";
+            resultDisplay.Text = "Clicked settings";
 
         }
     }

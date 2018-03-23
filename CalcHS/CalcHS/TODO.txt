@@ -1,9 +1,10 @@
 ﻿
 TODO:
-- fix bottom row not displaying (since adding top bar)
 -Disable keyboard popping up when clicking input (intercept event of some sort?)
    - Need to have custom renderers for Android and IOS.  See: https://theconfuzedsourcecode.wordpress.com/2017/05/19/a-keyboard-disabled-entry-control-in-xamarin-forms/
-
+- Fix exponent button - in NCalc, a "^" means bitwise OR; need to use "pow()" function instead 
+- Probably will need to implement "states" to communicate what mode the calculator is in and to take actions based on the state (i.e. answer was just given,
+  table mode, stat mode, etc.);
 
 Feautres to do next:
 - settings (color theme, mainly)
