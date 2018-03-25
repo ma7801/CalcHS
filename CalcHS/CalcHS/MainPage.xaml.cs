@@ -14,7 +14,7 @@ namespace CalcHS
     {
         //Label display;
         StackLayout displayWrap;
-        Entry entry;
+        NoKeyboardEntry entry;
         Label resultDisplay;
         DisplayState displayState;
         String expressionText;
@@ -129,7 +129,7 @@ namespace CalcHS
                 BackgroundColor = Color.FromHex(displayBGColor)
             };
 
-            entry = new Entry
+            entry = new NoKeyboardEntry
             {
                 Text = "",
                 FontSize = 24,
@@ -267,6 +267,7 @@ namespace CalcHS
             }
             entry.Text += buttonDict[button.Id].displayText;
             expressionText += buttonDict[button.Id].expressionText;
+            entry.Focus();   //***Causes keyboard to popup sometimes
             
         }
 

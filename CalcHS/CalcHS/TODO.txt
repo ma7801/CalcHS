@@ -1,10 +1,16 @@
 ﻿
 TODO:
--Disable keyboard popping up when clicking input (intercept event of some sort?)
-   - Need to have custom renderers for Android and IOS.  See: https://theconfuzedsourcecode.wordpress.com/2017/05/19/a-keyboard-disabled-entry-control-in-xamarin-forms/
-- Fix exponent button - in NCalc, a "^" means bitwise OR; need to use "pow()" function instead 
+- Force cursor to be at end of entry after entering (probably have to do in custom renderers) -- see https://forums.xamarin.com/discussion/71792/how-to-move-cursor-to-the-end-of-an-entry-when-clicked
+   - OR look at NCalc app to see its renderer - it must override system keyboard also, and it is seamless
+   - also, see https://www.codeproject.com/Articles/1172935/Detecting-software-keyboard-events-in-Xamarin-Andr
+
+- Allow editing of expression using cursor -- will need to change how "expressionText" is created -- will have to do a regex search and replace when = is pressed, rather than add to
+  expressionText as entry occurs.  This will also solve the exponent button issue (i.e. will have to replace 5^(2) with pow(5,2) or (3-2+5)^(3-2) with pow("(3-2+5)", "(3-2)"))?
+  - if pow can't take complex arguments like this, will have to have ncalc evaluate the individual expressions before and after the ^ if there is parentheses
 - Probably will need to implement "states" to communicate what mode the calculator is in and to take actions based on the state (i.e. answer was just given,
   table mode, stat mode, etc.);
+
+
 
 Feautres to do next:
 - settings (color theme, mainly)
