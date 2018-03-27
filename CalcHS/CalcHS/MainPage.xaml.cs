@@ -267,7 +267,9 @@ namespace CalcHS
             }
             entry.Text += buttonDict[button.Id].displayText;
             expressionText += buttonDict[button.Id].expressionText;
-            entry.Focus();   //***Causes keyboard to popup sometimes
+            
+            
+            //entry.Focus();   //***Causes keyboard to popup sometimes
             
         }
 

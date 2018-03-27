@@ -21,6 +21,9 @@ namespace CalcHS.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+
+            // For keyboard not to show up?
+            //Window.SetSoftInputMode(SoftInput.StateAlwaysHidden);
         }
     }
 }

@@ -3,6 +3,7 @@ TODO:
 - Force cursor to be at end of entry after entering (probably have to do in custom renderers) -- see https://forums.xamarin.com/discussion/71792/how-to-move-cursor-to-the-end-of-an-entry-when-clicked
    - OR look at NCalc app to see its renderer - it must override system keyboard also, and it is seamless
    - also, see https://www.codeproject.com/Articles/1172935/Detecting-software-keyboard-events-in-Xamarin-Andr
+   - and https://forums.xamarin.com/discussion/comment/167452/#Comment_167452 - basically overrides touch events to stop focus from changing
 
 - Allow editing of expression using cursor -- will need to change how "expressionText" is created -- will have to do a regex search and replace when = is pressed, rather than add to
   expressionText as entry occurs.  This will also solve the exponent button issue (i.e. will have to replace 5^(2) with pow(5,2) or (3-2+5)^(3-2) with pow("(3-2+5)", "(3-2)"))?
